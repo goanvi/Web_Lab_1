@@ -1,4 +1,6 @@
-const rInput = document.querySelector("#rInput");
+const rInput = document.querySelector("#r-input");
+const yInput = document.querySelector("#y-input");
+const xInputs = document.querySelectorAll(".x-btn");
 const dottedLines = document.querySelectorAll(".dotted-line");
 const checkLines = document.querySelectorAll(".hidden-line");
 const yLine = document.querySelector("#y-line");
@@ -6,7 +8,11 @@ const graph = document.querySelector("#graph-svg");
 const circle = document.querySelector(".dot");
 const xPointer = document.querySelector("#x-pointer");
 const yPointer = document.querySelector("#y-pointer");
+const submitBtn = document.querySelector("#submit-btn");
+const form = document.querySelector("#form");
 let rValue;
+let xValue;
+let yValue;
 let segment;
 
 graph.addEventListener("mousemove", (e) => {
@@ -26,16 +32,88 @@ graph.addEventListener("mousemove", (e) => {
   }
 });
 
+form.addEventListener("submit",(event) => {
+  event.preventDefault();
+  fetch(`http://localhost:5000/api/hit?x=${xValue}&y=${yValue}&r=${rValue}`)
+    .then((res) => res.text())
+    // .then((data) => {
+    //   sessionStorage.setItem(
+    //     'history',
+    //     sessionStorage.getItem('history') === null
+    //       ? data
+    //       : data + sessionStorage.getItem('history')
+    //   )
+    //   document
+    //     .querySelector('#result-table-body')
+    //     .insertAdjacentHTML('afterbegin', data)
+    // })
+    .then((data) => console.log(data))
+    .catch((e) => alert(e.message))
+});
+
 graph.addEventListener("click", (e) => {
-  if (rValue) setDot();
+  if (rValue) {
+    let activeLine;
+    dottedLines.forEach((line) => {
+      if (line.classList.contains("active")) activeLine = line;
+    });
+    const x = activeLine ? activeLine.getAttribute("x1") : 150;
+    const y = yLine.getAttribute("y1");
+    setDot(x, y);
+    const convX = +(((x - 150) / 100) * +rValue).toFixed();
+    const convY = +(-((y - 150) / 100) * +rValue).toFixed(2);
+    xValue = convX;
+    yValue = convY;
+    setInput(convX, convY);
+  }
 });
 
 rInput.addEventListener("input", (event) => {
-  rValue = +event.target.value;
-  if (validateRInput(rValue)) {
+  if (validateRInput(+event.target.value)) {
+    rValue = +event.target.value;
     setLinesCoordinates(rValue);
     changeRText(rValue);
-  } else inactiveMode();
+  } else {
+    rValue = undefined;
+    inactiveMode();
+    return;
+  }
+  if (validateYInput(yValue) && xValue) {
+    const convX = +((+xValue / rValue) * 100 + 150);
+    const convY = +(-((+yValue / rValue) * 100) + 150);
+    setDot(convX, convY);
+  }
+});
+
+yInput.addEventListener("input", (event) => {
+  if (validateYInput(event.target.value)) {
+    yValue = +event.target.value;
+  } else {
+    yValue = undefined;
+    return;
+  }
+  if (validateRInput(rValue) && xValue) {
+    const convX = +((+xValue / rValue) * 100 + 150);
+    const convY = +(-((+yValue / rValue) * 100) + 150);
+    setDot(convX, convY);
+  }
+});
+
+xInputs.forEach((xBtn) => {
+  xBtn.addEventListener("change", (event) => {
+    xInputs.forEach((xBtn) => (xBtn.checked = false));
+    if (xValue === +event.target.value) {
+      xValue = undefined;
+    } else {
+      event.target.checked = true;
+      xValue = +event.target.value;
+    }
+    if (validateYInput(yValue) && validateRInput(rValue)) {
+      const convX = +((+xValue / rValue) * 100 + 150);
+      const convY = +(-((+yValue / rValue) * 100) + 150);
+      setDot(convX, convY);
+    }
+  });
 });
 
 checkLines.forEach((line) => {
@@ -45,7 +123,7 @@ checkLines.forEach((line) => {
       event.target.getAttribute("x1") > 300 ||
       event.target.getAttribute("x1") < 0
     ) {
-      attr-=2;
+      attr -= 2;
     }
     dottedLines.forEach((dotLine) => {
       if (dotLine.dataset["number"] == attr) {
@@ -66,7 +144,7 @@ checkLines.forEach((line) => {
       event.target.getAttribute("x1") > 300 ||
       event.target.getAttribute("x1") < 0
     ) {
-      attr-=2;
+      attr -= 2;
     }
     dottedLines.forEach((dotLine) => {
       if (dotLine.dataset["number"] == attr) {
@@ -78,6 +156,24 @@ checkLines.forEach((line) => {
 
 function validateRInput(rValue) {
   if (rValue >= 1 && rValue <= 4) {
+    return true;
+  }
+  return false;
+}
+
+// function findActiveX(xInputs) {
+//   let activeBtn;
+//   xInputs.forEach((xBtn) => {
+//     if (xBtn.checked) {
+//       activeBtn = xBtn;
+//     }
+//   });
+//   return activeBtn;
+// }
+
+function validateYInput(yValue) {
+  if (yValue=="") return false;
+  if (yValue >= -3 && yValue <= 3) {
     return true;
   }
   return false;
@@ -118,13 +214,7 @@ function setLinesCoordinates(rValue) {
   }
 }
 
-function setDot() {
-  let activeLine;
-  dottedLines.forEach((line) => {
-    if (line.classList.contains("active")) activeLine = line;
-  });
-  const x = activeLine ? activeLine.getAttribute("x1") : 150;
-  const y = yLine.getAttribute("y1");
+function setDot(x, y) {
   circle.setAttribute("cx", x);
   circle.setAttribute("cy", y);
   xPointer.setAttribute("x1", x);
@@ -138,6 +228,16 @@ function setDot() {
   xPointer.classList.remove("inactive");
   yPointer.classList.remove("inactive");
   circle.classList.remove("inactive");
+}
+
+function setInput(x, y) {
+  yInput.value = y;
+  xInputs.forEach((xBtn) => {
+    xBtn.checked = false;
+    if (+xBtn.value === x) {
+      xBtn.checked = true;
+    }
+  });
 }
 
 function inactiveMode() {
