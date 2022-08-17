@@ -1,0 +1,142 @@
+@charset "UTF-8";
+#graph-plate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 1em;
+}
+
+#graph-svg {
+  height: 20em;
+  cursor: crosshair;
+}
+#graph-svg .graph-shape {
+  fill: #3772ff;
+  fill-opacity: 85%;
+}
+#graph-svg .graph-axle-text,
+#graph-svg .graph-axle-arrow,
+#graph-svg .graph-label {
+  fill: #000;
+}
+#graph-svg .graph-axle-line,
+#graph-svg .graph-axle-arrow,
+#graph-svg .graph-point {
+  stroke: #000;
+}
+#graph-svg .dotted-line-x,
+#graph-svg .dotted-line-y,
+#graph-svg .dotted-raw-x,
+#graph-svg .dotted-raw-y {
+  stroke: #000;
+  stroke-dasharray: 5;
+}
+#graph-svg .dotted-raw-x,
+#graph-svg .dotted-raw-y {
+  stroke-width: 2px;
+  stroke: #d02424;
+}
+#graph-svg .crossing {
+  fill: #d02424;
+}
+
+.line {
+  stroke: transparent;
+}
+.line.active {
+  stroke: red;
+  stroke-width: 1px;
+}
+.line.pointer {
+  stroke: black;
+  stroke-width: 1px;
+}
+
+.inactive {
+  display: none;
+}
+
+.dot {
+  fill: red;
+}
+
+#y-line {
+  stroke: red;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  font-family: monospace;
+  color: black;
+  font-size: 20px;
+  background: lightsteelblue;
+  padding: 10px;
+}
+
+.header__container {
+  display: flex;
+  justify-content: center;
+}
+
+.header__container span {
+  margin-right: 50px;
+}
+
+.header__container span:last-child {
+  margin-right: 0;
+}
+
+.main {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.main__graph {
+  display: inline;
+  box-sizing: border-box;
+  flex: 50% 0;
+  text-align: center;
+}
+
+.main__table {
+  display: flex;
+  flex: 50% 0;
+  justify-content: center;
+}
+
+.main__table table {
+  width: 100%;
+  text-align: center;
+}
+
+.main__panel {
+  border: 2px solid #000; /* не нужно*/
+  display: flex;
+  flex-direction: column;
+  flex: 50% 0;
+}
+
+.panel {
+  display: flex;
+  margin: 3px;
+}
+
+.panel h4 {
+  margin: 0 5px 0 0;
+}
+
+.main__panel__checkboxes {
+  display: flex;
+}
+
+.main__panel__checkboxes label {
+  display: flex;
+  flex-direction: column;
+  margin: 0 4px;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,80 @@
+@import './variables';
+@import './mixins';
+@import './graph';
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  font-family: monospace;
+  color: black;
+  font-size: 20px;
+  background: lightsteelblue;
+  padding: 10px;
+}
+
+.header__container {
+  display: flex;
+  justify-content: center;
+}
+.header__container span {
+  margin-right: 50px;
+}
+
+.header__container span:last-child {
+  margin-right: 0;
+}
+
+.main {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.main__graph {
+  display: inline;
+  box-sizing: border-box;
+  flex: 50% 0;
+  text-align: center;
+  
+}
+.main__table {
+  display: flex;
+  flex: 50% 0;
+  justify-content: center;
+}
+
+.main__table table {
+  width: 100%;
+  text-align: center;
+}
+
+.main__panel {
+  border: 2px solid #000; /* не нужно*/
+  display: flex;
+  flex-direction: column;
+  flex: 50% 0;
+
+}
+
+.panel {
+  display: flex;
+  margin: 3px;
+}
+
+.panel h4 {
+  margin: 0 5px 0 0;
+}
+
+.main__panel__checkboxes {
+  display: flex;
+}
+
+.main__panel__checkboxes label {
+  display: flex;
+  flex-direction: column;
+  margin: 0 4px;
+}
+
+
