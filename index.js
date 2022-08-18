@@ -17,6 +17,7 @@ let segment;
 
 graph.addEventListener("mousemove", (e) => {
   const coord = e.offsetY - 20 * (e.offsetY / 320);
+  const coordX = e.offsetX - 20 * (e.offsetX / 320);
   if (rValue) {
     const limit = 300 / rValue;
     if (coord > 150) {
@@ -26,13 +27,30 @@ graph.addEventListener("mousemove", (e) => {
       yLine.setAttribute("y1", coord >= 150 - limit ? coord : 150 - limit);
       yLine.setAttribute("y2", coord >= 150 - limit ? coord : 150 - limit);
     }
+    if (
+      coordX > 150 + (segment * dottedLines.length) / 2 ||
+      coordX < 150 - (segment * dottedLines.length) / 2
+    ) {
+      let activeLine;
+      dottedLines.forEach((line) => {
+        if (line.classList.contains("active")) activeLine = line;
+      });
+      if (coordX > 150 + (segment * dottedLines.length) / 2 && !activeLine) {
+        dottedLines[dottedLines.length - 1].classList.add("active");
+      } else if (
+        coordX < 150 - (segment * dottedLines.length) / 2 &&
+        !activeLine
+      ) {
+        dottedLines[dottedLines.length - 2].classList.add("active");
+      }
+    }
   } else {
     yLine.setAttribute("y1", coord);
     yLine.setAttribute("y2", coord);
   }
 });
 
-form.addEventListener("submit",(event) => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
   fetch(`http://localhost:5000/api/hit?x=${xValue}&y=${yValue}&r=${rValue}`)
     .then((res) => res.text())
@@ -48,7 +66,7 @@ form.addEventListener("submit",(event) => {
     //     .insertAdjacentHTML('afterbegin', data)
     // })
     .then((data) => console.log(data))
-    .catch((e) => alert(e.message))
+    .catch((e) => alert(e.message));
 });
 
 graph.addEventListener("click", (e) => {
@@ -135,12 +153,6 @@ checkLines.forEach((line) => {
     let attr = event.target.dataset["number"];
     const coordX = event.offsetX - 20 * (event.offsetX / 320); // при изменении размера графа это сломается
     if (
-      coordX < 150 - segment * (checkLines.length / 2) ||
-      coordX > 150 + segment * (checkLines.length / 2)
-    ) {
-      return;
-    }
-    if (
       event.target.getAttribute("x1") > 300 ||
       event.target.getAttribute("x1") < 0
     ) {
@@ -154,6 +166,10 @@ checkLines.forEach((line) => {
   });
 });
 
+graph.addEventListener("mouseleave", () => {
+  dottedLines.forEach((dotLine) => dotLine.classList.remove("active"));
+});
+
 function validateRInput(rValue) {
   if (rValue >= 1 && rValue <= 4) {
     return true;
@@ -161,18 +177,8 @@ function validateRInput(rValue) {
   return false;
 }
 
-// function findActiveX(xInputs) {
-//   let activeBtn;
-//   xInputs.forEach((xBtn) => {
-//     if (xBtn.checked) {
-//       activeBtn = xBtn;
-//     }
-//   });
-//   return activeBtn;
-// }
-
 function validateYInput(yValue) {
-  if (yValue=="") return false;
+  if (yValue == "") return false;
   if (yValue >= -3 && yValue <= 3) {
     return true;
   }
