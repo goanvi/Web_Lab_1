@@ -1,4 +1,3 @@
-@charset "UTF-8";
 #graph-plate {
   display: flex;
   align-items: center;
@@ -61,10 +60,6 @@
   fill: red;
 }
 
-#y-line {
-  stroke: red;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -92,51 +87,125 @@
 }
 
 .main {
+  padding: 40px 15% 0 15%;
   display: flex;
-  width: 100%;
-  flex-wrap: wrap;
+  height: 500px;
+}
+
+.col-5 {
+  flex: 41.7% 0;
+}
+
+.col-7 {
+  flex: 58.3% 0;
 }
 
 .main__graph {
-  display: inline;
   box-sizing: border-box;
-  flex: 50% 0;
-  text-align: center;
-}
-
-.main__table {
-  display: flex;
-  flex: 50% 0;
-  justify-content: center;
-}
-
-.main__table table {
-  width: 100%;
-  text-align: center;
+  height: 70%;
 }
 
 .main__panel {
-  border: 2px solid #000; /* не нужно*/
   display: flex;
   flex-direction: column;
-  flex: 50% 0;
+  box-sizing: border-box;
+  height: 30%;
 }
 
 .panel {
   display: flex;
-  margin: 3px;
+  margin: 15px 0;
+  align-items: center;
 }
-
 .panel h4 {
-  margin: 0 5px 0 0;
+  margin: 0 15px 0 0;
 }
 
 .main__panel__checkboxes {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
-
 .main__panel__checkboxes label {
   display: flex;
-  flex-direction: column;
-  margin: 0 4px;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  background: lightsteelblue;
+  cursor: pointer;
+  border-radius: 7px;
+  transition: 0.1s ease-in-out;
+}
+.main__panel__checkboxes label:hover {
+  background: rgb(146, 168, 198);
+}
+.main__panel__checkboxes label.active-btn {
+  background: rgb(79, 101, 132);
+  color: #fff;
+}
+.main__panel__checkboxes input {
+  display: none;
+}
+
+.form {
+  width: 320px;
+}
+
+.panel input {
+  padding: 0 7px;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid lightsteelblue;
+  outline: none;
+  height: 25px;
+}
+
+#submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 60px;
+  margin-left: 26px;
+  border-radius: 7px;
+  background: lightsteelblue;
+  border: none;
+  cursor: pointer;
+  transition: hover 0.1s ease-in-out;
+}
+#submit-btn:hover {
+  background: rgb(146, 168, 198);
+}
+#submit-btn:active {
+  background: rgb(79, 101, 132);
+  color: #fff;
+}
+
+.main__table {
+  height: 500px;
+  overflow-y: scroll;
+  border: 1px solid lightsteelblue;
+  box-sizing: border-box;
+  border-radius: 7px;
+}
+.main__table::-webkit-scrollbar {
+  display: none;
+}
+.main__table thead th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+.main__table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.main__table th,
+.main__table td {
+  padding: 10px;
+}
+.main__table th {
+  background: lightsteelblue;
+  color: #000;
 }/*# sourceMappingURL=style.css.map */

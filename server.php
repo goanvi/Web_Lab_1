@@ -5,7 +5,7 @@ header('Access-Control-Allow-Methods: GET');
 header("Access-Control-Allow-Headers: X-Requested-With");
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    // print_r(parse_url($_SERVER['REQUEST_URI'], PHP_URL_SCHEME));
+    print_r(parse_url($_SERVER['REQUEST_URI'], PHP_URL_SCHEME));
     $path =  parse_url($_SERVER['REQUEST_URI'])['path'];
     if ($path == '/api/hit') {
         $script_start = microtime(true);
@@ -16,19 +16,19 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
             $rValue = floatval($_GET['r']);
             $hit = hit($xValue, $yValue, $rValue);
             $hitted = $hit ? 'hitted' : 'miss';
-            echo ("x: " . $xValue . " y: " . $yValue . " r: " . $rValue . " hit: " . $hitted);
-            // // $currentTime = date_format(new DateTime(),microtime(true));
-            // $currentTime = gmDate("H:i:s",time() + 3600*(3+date("I")));
-            //     $execution_time = ceil((microtime(true) - $script_start) * 100000000) /100;
-            //     echo "
-            //     <tr style='text-align: center;'>
-            //         <td>$xValue</td>
-            //         <td>$yValue</td>
-            //         <td>$rValue</td>
-            //         <td>$hitted</td>
-            //         <td>$currentTime</td>
-            //         <td>$execution_time ms</td>
-            //     </tr>";
+            // echo ("x: " . $xValue . " y: " . $yValue . " r: " . $rValue . " hit: " . $hitted);
+            $currentTime = date_format(new DateTime(),microtime(true));
+            $currentTime = gmDate("H:i:s",time() + 3600*(3+date("I")));
+                $execution_time = ceil((microtime(true) - $script_start) * 100000000) /100;
+                echo "
+                <tr style='text-align: center;'>
+                    <td>$xValue</td>
+                    <td>$yValue</td>
+                    <td>$rValue</td>
+                    <td>$hitted</td>
+                    <td>$currentTime</td>
+                    <td>$execution_time ms</td>
+                </tr>";
         } else {
             http_response_code(400);
             echo 'Bad request';

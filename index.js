@@ -15,9 +15,17 @@ let xValue;
 let yValue;
 let segment;
 
+document.addEventListener('DOMContentLoaded', () => {
+  const data = sessionStorage.getItem('history')
+  document
+    .querySelector('#result-table-body')
+    .insertAdjacentHTML('beforeend', data ? data : '')
+})
+
 graph.addEventListener("mousemove", (e) => {
   const coord = e.offsetY - 20 * (e.offsetY / 320);
   const coordX = e.offsetX - 20 * (e.offsetX / 320);
+  yLine.setAttribute("stroke", "red");
   if (rValue) {
     const limit = 300 / rValue;
     if (coord > 150) {
@@ -54,18 +62,17 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   fetch(`http://localhost:5000/api/hit?x=${xValue}&y=${yValue}&r=${rValue}`)
     .then((res) => res.text())
-    // .then((data) => {
-    //   sessionStorage.setItem(
-    //     'history',
-    //     sessionStorage.getItem('history') === null
-    //       ? data
-    //       : data + sessionStorage.getItem('history')
-    //   )
-    //   document
-    //     .querySelector('#result-table-body')
-    //     .insertAdjacentHTML('afterbegin', data)
-    // })
-    .then((data) => console.log(data))
+    .then((data) => {
+      sessionStorage.setItem(
+        'history',
+        sessionStorage.getItem('history') === null
+          ? data
+          : data + sessionStorage.getItem('history')
+      )
+      document
+        .querySelector('#result-table-body')
+        .insertAdjacentHTML('afterbegin', data)
+    })
     .catch((e) => alert(e.message));
 });
 
@@ -119,11 +126,15 @@ yInput.addEventListener("input", (event) => {
 
 xInputs.forEach((xBtn) => {
   xBtn.addEventListener("change", (event) => {
-    xInputs.forEach((xBtn) => (xBtn.checked = false));
+    xInputs.forEach((xBtn) => {
+      xBtn.checked = false;
+      xBtn.parentElement.classList.remove("active-btn");
+    });
     if (xValue === +event.target.value) {
       xValue = undefined;
     } else {
       event.target.checked = true;
+      event.target.parentElement.classList.add("active-btn");
       xValue = +event.target.value;
     }
     if (validateYInput(yValue) && validateRInput(rValue)) {
@@ -240,8 +251,10 @@ function setInput(x, y) {
   yInput.value = y;
   xInputs.forEach((xBtn) => {
     xBtn.checked = false;
+    xBtn.parentElement.classList.remove("active-btn");
     if (+xBtn.value === x) {
       xBtn.checked = true;
+      xBtn.parentElement.classList.add("active-btn");
     }
   });
 }
