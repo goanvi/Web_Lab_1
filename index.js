@@ -10,17 +10,19 @@ const xPointer = document.querySelector("#x-pointer");
 const yPointer = document.querySelector("#y-pointer");
 const submitBtn = document.querySelector("#submit-btn");
 const form = document.querySelector("#form");
+const notify = document.querySelector(".notify");
+const notifyMessage = document.querySelector(".notify__message");
 let rValue;
 let xValue;
 let yValue;
 let segment;
 
-document.addEventListener('DOMContentLoaded', () => {
-  const data = sessionStorage.getItem('history')
+document.addEventListener("DOMContentLoaded", () => {
+  const data = sessionStorage.getItem("history");
   document
-    .querySelector('#result-table-body')
-    .insertAdjacentHTML('beforeend', data ? data : '')
-})
+    .querySelector("#result-table-body")
+    .insertAdjacentHTML("beforeend", data ? data : "");
+});
 
 graph.addEventListener("mousemove", (e) => {
   const coord = e.offsetY - 20 * (e.offsetY / 320);
@@ -59,24 +61,34 @@ graph.addEventListener("mousemove", (e) => {
 });
 
 form.addEventListener("submit", (event) => {
+  disableNotification();
   event.preventDefault();
-  fetch(`http://localhost:5000/api/hit?x=${xValue}&y=${yValue}&r=${rValue}`)
-    .then((res) => res.text())
-    .then((data) => {
-      sessionStorage.setItem(
-        'history',
-        sessionStorage.getItem('history') === null
-          ? data
-          : data + sessionStorage.getItem('history')
-      )
-      document
-        .querySelector('#result-table-body')
-        .insertAdjacentHTML('afterbegin', data)
-    })
-    .catch((e) => alert(e.message));
+  if (xValue !== undefined && yValue !== undefined && rValue !== undefined) {
+    fetch(`http://localhost:5000/api/hit?x=${xValue}&y=${yValue}&r=${rValue}`)
+      .then((res) => res.text())
+      .then((data) => {
+        sessionStorage.setItem(
+          "history",
+          sessionStorage.getItem("history") === null
+            ? data
+            : data + sessionStorage.getItem("history")
+        );
+        document
+          .querySelector("#result-table-body")
+          .insertAdjacentHTML("afterbegin", data);
+      })
+      .catch((e) => alert(e.message));
+  } else if (xValue === undefined) {
+    setNotification("x value is empty");
+  } else if (yValue === undefined) {
+    setNotification("invalid y, range [-3,3]");
+  } else if (rValue === undefined) {
+    setNotification("invalid r, range [1,4]");
+  }
 });
 
 graph.addEventListener("click", (e) => {
+  disableNotification();
   if (rValue) {
     let activeLine;
     dottedLines.forEach((line) => {
@@ -94,6 +106,7 @@ graph.addEventListener("click", (e) => {
 });
 
 rInput.addEventListener("input", (event) => {
+  disableNotification();
   if (validateRInput(+event.target.value)) {
     rValue = +event.target.value;
     setLinesCoordinates(rValue);
@@ -111,6 +124,7 @@ rInput.addEventListener("input", (event) => {
 });
 
 yInput.addEventListener("input", (event) => {
+  disableNotification();
   if (validateYInput(event.target.value)) {
     yValue = +event.target.value;
   } else {
@@ -126,14 +140,15 @@ yInput.addEventListener("input", (event) => {
 
 xInputs.forEach((xBtn) => {
   xBtn.addEventListener("change", (event) => {
+  disableNotification();
     xInputs.forEach((xBtn) => {
-      xBtn.checked = false;
       xBtn.parentElement.classList.remove("active-btn");
     });
     if (xValue === +event.target.value) {
       xValue = undefined;
+      inactiveDot();
+      return;
     } else {
-      event.target.checked = true;
       event.target.parentElement.classList.add("active-btn");
       xValue = +event.target.value;
     }
@@ -179,6 +194,7 @@ checkLines.forEach((line) => {
 
 graph.addEventListener("mouseleave", () => {
   dottedLines.forEach((dotLine) => dotLine.classList.remove("active"));
+  yLine.setAttribute("stroke", "transparent");
 });
 
 function validateRInput(rValue) {
@@ -250,10 +266,8 @@ function setDot(x, y) {
 function setInput(x, y) {
   yInput.value = y;
   xInputs.forEach((xBtn) => {
-    xBtn.checked = false;
     xBtn.parentElement.classList.remove("active-btn");
     if (+xBtn.value === x) {
-      xBtn.checked = true;
       xBtn.parentElement.classList.add("active-btn");
     }
   });
@@ -262,7 +276,19 @@ function setInput(x, y) {
 function inactiveMode() {
   checkLines.forEach((line) => line.classList.add("inactive"));
   changeRText("R");
+  inactiveDot();
+}
+
+function inactiveDot() {
   xPointer.classList.add("inactive");
   yPointer.classList.add("inactive");
   circle.classList.add("inactive");
+}
+
+function setNotification(text) {
+  notify.classList.remove("disabled");
+  notifyMessage.innerText = text;
+}
+function disableNotification() {
+  notify.classList.add("disabled");
 }

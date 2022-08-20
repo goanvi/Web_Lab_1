@@ -102,14 +102,12 @@
 
 .main__graph {
   box-sizing: border-box;
-  height: 70%;
 }
 
 .main__panel {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  height: 30%;
 }
 
 .panel {
@@ -208,4 +206,21 @@
 .main__table th {
   background: lightsteelblue;
   color: #000;
+}
+
+.notify {
+  color: red;
+  width: 320px;
+  position: fixed;
+  text-align: center;
+}
+.notify__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 5px;
+  cursor: pointer;
+}
+.notify.disabled {
+  display: none;
 }/*# sourceMappingURL=style.css.map */
