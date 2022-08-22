@@ -16,11 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
             $rValue = floatval($_GET['r']);
             $hit = hit($xValue, $yValue, $rValue);
             $hitted = $hit ? 'hitted' : 'miss';
-            // echo ("x: " . $xValue . " y: " . $yValue . " r: " . $rValue . " hit: " . $hitted);
-            $currentTime = date_format(new DateTime(),microtime(true));
-            $currentTime = gmDate("H:i:s",time() + 3600*(3+date("I")));
-                $execution_time = ceil((microtime(true) - $script_start) * 100000000) /100;
-                echo "
+            $currentTime = date_format(new DateTime(), microtime(true));
+            $currentTime = gmDate("H:i:s", time() + 3600 * (3 + date("I")));
+            $execution_time = ceil((microtime(true) - $script_start) * 100000000) / 100;
+            echo "
                 <tr style='text-align: center;'>
                     <td>$xValue</td>
                     <td>$yValue</td>
@@ -34,20 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
             echo 'Bad request';
             exit(400);
         }
-        // echo print_r(parse_url($_SERVER['REQUEST_URI']));
     }
-    // if (explode("?", $_SERVER['REQUEST_URI'])[0] == '/api/xui') {
-    //     header('Content-Type: text/html');
-    //     if (isset($_GET['q'])) {
-    //         $params = $_GET['q'];
-    //         echo "<h1>xui in xui <br/> <span style='color: red'>$params</span>  </h1>";
-    //     } else {
-    //         echo "<h1>xui in xui</h1>";
-    //     }
-    // }
-    // if ($_SERVER['REQUEST_URI'] == '/api/clear') {
-    //     echo '<h1>Clear</h1>';
-    // }
 }
 
 function hit($x, $y, $r)

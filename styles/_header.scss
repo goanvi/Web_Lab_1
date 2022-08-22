@@ -1,0 +1,20 @@
+@import './variables';
+@import './mixins';
+
+.header {
+  font-family: monospace;
+  color: $main-text-color;
+  font-size: 20px;
+  background: $main-background-color;
+  padding: 10px 0;
+  margin-bottom: 40px;
+  &__container {
+    @include align-center;
+    span {
+      margin-right: 50px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

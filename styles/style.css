@@ -34,10 +34,10 @@
 #graph-svg .dotted-raw-x,
 #graph-svg .dotted-raw-y {
   stroke-width: 2px;
-  stroke: #d02424;
+  stroke: red;
 }
 #graph-svg .crossing {
-  fill: #d02424;
+  fill: red;
 }
 
 .line {
@@ -48,7 +48,7 @@
   stroke-width: 1px;
 }
 .line.pointer {
-  stroke: black;
+  stroke: #000;
   stroke-width: 1px;
 }
 
@@ -60,96 +60,35 @@
   fill: red;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .header {
   font-family: monospace;
   color: black;
   font-size: 20px;
   background: lightsteelblue;
-  padding: 10px;
+  padding: 10px 0;
+  margin-bottom: 40px;
 }
-
 .header__container {
   display: flex;
+  align-items: center;
   justify-content: center;
 }
-
 .header__container span {
   margin-right: 50px;
 }
-
 .header__container span:last-child {
   margin-right: 0;
 }
 
-.main {
-  padding: 40px 15% 0 15%;
-  display: flex;
-  height: 500px;
-}
-
-.col-5 {
-  flex: 41.7% 0;
-}
-
-.col-7 {
-  flex: 58.3% 0;
-}
-
-.main__graph {
-  box-sizing: border-box;
-}
-
-.main__panel {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
 .panel {
   display: flex;
-  margin: 15px 0;
   align-items: center;
+  justify-content: center;
+  margin: 15px 0;
 }
 .panel h4 {
   margin: 0 15px 0 0;
 }
-
-.main__panel__checkboxes {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-.main__panel__checkboxes label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 25px;
-  height: 25px;
-  background: lightsteelblue;
-  cursor: pointer;
-  border-radius: 7px;
-  transition: 0.1s ease-in-out;
-}
-.main__panel__checkboxes label:hover {
-  background: rgb(146, 168, 198);
-}
-.main__panel__checkboxes label.active-btn {
-  background: rgb(79, 101, 132);
-  color: #fff;
-}
-.main__panel__checkboxes input {
-  display: none;
-}
-
-.form {
-  width: 320px;
-}
-
 .panel input {
   padding: 0 7px;
   width: 100%;
@@ -159,10 +98,38 @@
   height: 25px;
 }
 
-#submit-btn {
+.x-checkboxes {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.x-checkboxes label {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 25px;
+  height: 25px;
+  background: lightsteelblue;
+  cursor: pointer;
+  border-radius: 7px;
+  transition: 0.1s ease-in-out;
+}
+.x-checkboxes label:hover {
+  background: rgb(146, 168, 198);
+}
+.x-checkboxes label.active-btn {
+  background: rgb(79, 101, 132);
+  color: white;
+}
+.x-checkboxes input {
+  display: none;
+}
+
+.form {
+  width: 320px;
+}
+
+#submit-btn {
   height: 30px;
   width: 60px;
   margin-left: 26px;
@@ -177,7 +144,7 @@
 }
 #submit-btn:active {
   background: rgb(79, 101, 132);
-  color: #fff;
+  color: white;
 }
 
 .main__table {
@@ -205,7 +172,27 @@
 }
 .main__table th {
   background: lightsteelblue;
-  color: #000;
+  color: black;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.main {
+  margin: 0 auto;
+  display: flex;
+  height: 500px;
+  max-width: 1000px;
+}
+
+.col-5 {
+  flex: 41.7% 0;
+}
+
+.col-7 {
+  flex: 58.3% 0;
 }
 
 .notify {

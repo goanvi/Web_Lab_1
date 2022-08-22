@@ -50,12 +50,12 @@
 .line {
   stroke: transparent;
   &.active {
-    stroke: red;
+    stroke: $dotted-line-color;
     stroke-width: 1px;
   }
 
   &.pointer{
-    stroke: black;
+    stroke: $stroke-color;
     stroke-width: 1px;
   }
 }
@@ -65,5 +65,5 @@
 }
 
 .dot{
-  fill: red;
+  fill: $dotted-line-color;
 }

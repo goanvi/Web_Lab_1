@@ -1,0 +1,65 @@
+@import "./variables";
+@import "./mixins";
+
+.panel {
+  @include align-center;
+  margin: 15px 0;
+  h4 {
+    margin: 0 15px 0 0;
+  }
+  input {
+    padding: 0 7px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid $main-background-color;
+    outline: none;
+    height: 25px;
+  }
+}
+
+.x-checkboxes {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  label {
+    @include align-center;
+    width: 25px;
+    height: 25px;
+    background: $main-background-color;
+    cursor: pointer;
+    border-radius: 7px;
+    transition: 0.1s ease-in-out;
+    &:hover {
+      background: $hovered-button-color;
+    }
+    &.active-btn {
+      background: $active-button-color;
+      color: $additional-text-color;
+    }
+  }
+  input {
+    display: none;
+  }
+}
+
+.form {
+  width: 320px;
+}
+
+#submit-btn {
+  height: 30px;
+  width: 60px;
+  margin-left: 26px;
+  border-radius: 7px;
+  background: $main-background-color;
+  border: none;
+  cursor: pointer;
+  transition: hover 0.1s ease-in-out;
+  &:hover {
+    background: $hovered-button-color;
+  }
+  &:active {
+    background: $active-button-color;
+    color: $additional-text-color;
+  }
+}

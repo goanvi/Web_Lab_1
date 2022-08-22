@@ -1,0 +1,26 @@
+.main__table {
+    height: 500px;
+    overflow-y: scroll;
+    border: 1px solid $main-background-color;
+    box-sizing: border-box;
+    border-radius: 7px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    thead th {
+      position: sticky;
+      top: 0;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th,
+    td {
+      padding: 10px;
+    }
+    th {
+      background: $main-background-color;
+      color: $main-text-color;
+    }
+  }

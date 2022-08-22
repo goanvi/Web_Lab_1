@@ -1,21 +1,12 @@
-$background-color: #ebecf0;
-$light-color: #c2c8d1;
-$wrong-value-color: #ec4c4c;
-$row-color: #e1e1e7;
 $fill-color: #3772ff;
 $stroke-color: #000;
-$dotted-line-color: #d02424;
+$dotted-line-color: red;
 
-$light-shadow: #fff;
-$dark-shadow: #babecc;
+$main-background-color: lightsteelblue;
+$hovered-button-color: rgb(146, 168, 198);
+$active-button-color: rgb(79, 101, 132);
 
-$roboto-font: 'Roboto Regular', sans-serif;
-$font-size: 16px;
-$font-color: #4f5359;
-$text-shadow: 1px 1px 1px $light-shadow;
+$main-text-color: black;
+$additional-text-color:white;
 
-$regular-font: 400;
-$medium-font: 600;
-
-$normal-transition: all 0.2s ease-in;
-$fast-transition: all 0.1s ease-in-out;
+$wrong-input-color:red;
