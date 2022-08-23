@@ -1,0 +1,12 @@
+{
+  "name": "lab-1",
+  "version": "1.0.0",
+  "source": "index.html",
+  "scripts": {
+    "start":"parcel --open --port 5500",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "parcel": "^2.7.0"
+  }
+}
