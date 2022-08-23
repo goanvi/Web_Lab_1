@@ -1,3 +1,4 @@
+import "./styles/style.scss";
 const rInput = document.querySelector("#r-input");
 const yInput = document.querySelector("#y-input");
 const xInputs = document.querySelectorAll(".x-btn");
@@ -140,7 +141,7 @@ yInput.addEventListener("input", (event) => {
 
 xInputs.forEach((xBtn) => {
   xBtn.addEventListener("change", (event) => {
-  disableNotification();
+    disableNotification();
     xInputs.forEach((xBtn) => {
       xBtn.parentElement.classList.remove("active-btn");
     });
