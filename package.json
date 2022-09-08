@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open --port 3000",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server":"php -S localhost:5000 ./server/server.php"
   },
   "devDependencies": {
     "sass": "^1.54.5",

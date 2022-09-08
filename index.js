@@ -13,6 +13,7 @@ const submitBtn = document.querySelector("#submit-btn");
 const form = document.querySelector("#form");
 const notify = document.querySelector(".notify");
 const notifyMessage = document.querySelector(".notify__message");
+const timezone = new Date().getTimezoneOffset();
 let rValue;
 let xValue;
 let yValue;
@@ -65,7 +66,7 @@ form.addEventListener("submit", (event) => {
   disableNotification();
   event.preventDefault();
   if (xValue !== undefined && yValue !== undefined && rValue !== undefined) {
-    fetch(`http://localhost:5000/api/hit?x=${xValue}&y=${yValue}&r=${rValue}`)
+    fetch(`http://localhost:5000/api/hit?x=${xValue}&y=${yValue}&r=${rValue}&timezone=${timezone}`)
       .then((res) => res.text())
       .then((data) => {
         sessionStorage.setItem(
@@ -107,37 +108,39 @@ graph.addEventListener("click", (e) => {
 });
 
 rInput.addEventListener("input", (event) => {
-  disableNotification();
-  if (validateRInput(+event.target.value)) {
-    rValue = +event.target.value;
-    setLinesCoordinates(rValue);
-    changeRText(rValue);
-  } else {
-    rValue = undefined;
-    inactiveMode();
-    return;
+    disableNotification();
+    if (validateRInput(+event.target.value)) {
+      rValue = +event.target.value;
+      setLinesCoordinates(rValue);
+      changeRText(rValue);
+    } else {
+      rValue = undefined;
+      inactiveMode();
+      return;
+    }
+    if (validateYInput(yValue) && xValue) {
+      const convX = +((+xValue / rValue) * 100 + 150);
+      const convY = +(-((+yValue / rValue) * 100) + 150);
+      setDot(convX, convY);
+    }
   }
-  if (validateYInput(yValue) && xValue) {
-    const convX = +((+xValue / rValue) * 100 + 150);
-    const convY = +(-((+yValue / rValue) * 100) + 150);
-    setDot(convX, convY);
-  }
-});
+);
 
 yInput.addEventListener("input", (event) => {
-  disableNotification();
-  if (validateYInput(event.target.value)) {
-    yValue = +event.target.value;
-  } else {
-    yValue = undefined;
-    return;
+    disableNotification();
+    if (validateYInput(event.target.value)) {
+      yValue = +event.target.value;
+    } else {
+      yValue = undefined;
+      return;
+    }
+    if (validateRInput(rValue) && xValue) {
+      const convX = +((+xValue / rValue) * 100 + 150);
+      const convY = +(-((+yValue / rValue) * 100) + 150);
+      setDot(convX, convY);
+    }
   }
-  if (validateRInput(rValue) && xValue) {
-    const convX = +((+xValue / rValue) * 100 + 150);
-    const convY = +(-((+yValue / rValue) * 100) + 150);
-    setDot(convX, convY);
-  }
-});
+);
 
 xInputs.forEach((xBtn) => {
   xBtn.addEventListener("change", (event) => {

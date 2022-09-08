@@ -14,10 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
             $xValue = floatval($_GET['x']);
             $yValue = floatval($_GET['y']);
             $rValue = floatval($_GET['r']);
+            $timeZone = floatval($_GET['timezone']);
             $hit = hit($xValue, $yValue, $rValue);
             $hitted = $hit ? 'hitted' : 'miss';
             $currentTime = date_format(new DateTime(), microtime(true));
-            $currentTime = gmDate("H:i:s", time() + 3600 * (3 + date("I")));
+            $currentTime = gmDate("H:i:s", time() -$timeZone*60);
             $execution_time = ceil((microtime(true) - $script_start) * 100000000) / 100;
             echo "
                 <tr style='text-align: center;'>
