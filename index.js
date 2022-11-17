@@ -19,6 +19,8 @@ let xValue;
 let yValue;
 let segment;
 
+if (location.hostname == "127.0.0.1") window.close();
+
 document.addEventListener("DOMContentLoaded", () => {
   const data = sessionStorage.getItem("history");
   document
